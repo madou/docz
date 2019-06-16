@@ -1,6 +1,6 @@
 {
   "name": "@madou/docz-core",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "All docz core logic of bundle and parsing is included on this package",
   "license": "MIT",
   "main": "dist/index.js",
