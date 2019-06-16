@@ -28,6 +28,11 @@ const goToHash = ({ location }: HistoryListenerParameter) => {
   })
 }
 
+export const ScrollToTop = ({ children, location }: any) => {
+  React.useEffect(() => window.scrollTo(0, 0), [location.pathname])
+  return children
+}
+
 export const Routes: SFC<RoutesProps> = ({ imports }) => {
   const components = useComponents()
   const { entries } = useContext(doczState.context)
@@ -38,11 +43,6 @@ export const Routes: SFC<RoutesProps> = ({ imports }) => {
   useEffect(() => {
     history.listen(goToHash)
   }, [])
-
-  export const ScrollToTop = ({ children, location }) => {
-    React.useEffect(() => window.scrollTo(0, 0), [location.pathname])
-    return children
-  }
 
   return (
     <MDXProvider components={components}>
