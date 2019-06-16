@@ -39,26 +39,33 @@ export const Routes: SFC<RoutesProps> = ({ imports }) => {
     history.listen(goToHash)
   }, [])
 
+  export const ScrollToTop = ({ children, location }) => {
+    React.useEffect(() => window.scrollTo(0, 0), [location.pathname])
+    return children
+  }
+
   return (
     <MDXProvider components={components}>
       <LocationProvider history={history}>
-        <Router>
-          <NotFound default />
-          {entries &&
-            entries.map(({ key: path, value: entry }) => {
-              const props = { path, entries, components }
-              const component = loadRoute(path, imports, components)
+        <Router primary={false}>
+          <ScrollToTop path="/">
+            <NotFound default />
+            {entries &&
+              entries.map(({ key: path, value: entry }) => {
+                const props = { path, entries, components }
+                const component = loadRoute(path, imports, components)
 
-              return (
-                <AsyncRoute
-                  {...props}
-                  entry={entry}
-                  key={entry.id}
-                  path={entry.route}
-                  asyncComponent={component}
-                />
-              )
-            })}
+                return (
+                  <AsyncRoute
+                    {...props}
+                    entry={entry}
+                    key={entry.id}
+                    path={entry.route}
+                    asyncComponent={component}
+                  />
+                )
+              })}
+          </ScrollToTop>
         </Router>
       </LocationProvider>
     </MDXProvider>
